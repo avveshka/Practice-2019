@@ -13,8 +13,8 @@
 }   
 
 @font-face {
-    font-family: "Signika-Negetive";
-    src: url("fonts/Signika_Negative/SignikaNegative-Regular.ttf") format("truetype");
+    font-family: "Signika-Negetive-Light";
+    src: url("fonts/Signika_Negative/SignikaNegative-Light.ttf") format("truetype");
     font-weight : normal;
     font-style: normal;
 }

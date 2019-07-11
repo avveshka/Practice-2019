@@ -2,6 +2,14 @@ body {
     background-color: #EAEDF1
 }
 
+h1 {
+    font-family: "Signika-Lite";
+}
+
+p {
+    font-family: "Lato";
+}
+
 .clearfix::after {
     content: "";
     display: table;
@@ -11,7 +19,6 @@ body {
 .header {
     width : 1510px;
     margin: 83px auto 36.5px;
-    background-color: white;
     height: 295px;
 }
 
@@ -68,7 +75,7 @@ body {
 
 .header > .left-header-column > img {
     margin-top: 32px;
-    margin-left: 25px;
+    margin-left: 24px;
 }
 
 .left-header-column-info {
@@ -78,18 +85,16 @@ body {
 }
 
 .header > .left-header-column > .left-header-column-info >  h1 {
-    font-family: "Signika-Lite";
     font-size: 30px;
     display: block;
     float: right;
     margin-top: 76px;
-    margin-right: 32px;
+    margin-right: 30.5px;
     margin-bottom: 0px;
     color: #33495F;
 }
 
 .header > .left-header-column > .left-header-column-info > p {
-    font-family: "Lato";
     font-size: 17.3px;
     display: block;
     float: left;
@@ -97,4 +102,179 @@ body {
     margin-left: 37px;
     margin-top: 3px;
     color: #586879;
+}
+
+.bar {
+    width: 108.4px;
+    height: 78px;
+    display: block;
+    float: left;
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-top: 29px;
+}
+
+.bar-1 {
+    background-color: #16C4EC;
+}
+
+.bar-2 {
+    background-color: #FA5351;
+}
+
+.bar-3 {
+    background-color: #10CDC1;
+}
+
+.bar-4 {
+    background-color: #33495F;
+}
+
+.bar-1 > img {
+    margin-left: 45px;
+    margin-top: 21px;
+}
+
+.bar-2 > img {
+    margin-left: 46px;
+    margin-top: 17px;
+}
+
+.bar-3 > img {
+    margin-left: 41px;
+    margin-top: 19px;
+}
+
+.bar-4 > img {
+    margin-left: 40px;
+    margin-top: 16px;
+}
+
+.left-header-column-bar-text {
+    display: block;
+    font-family: "Lato";
+    margin: 0px;
+    color: white;
+    font-size: 16px;
+    letter-spacing: -0.8px;
+}
+
+.bar-1 > p {
+    margin-left: 30px;
+    margin-top: 2px;
+}
+
+.bar-2 > p {
+    margin-left: 14px;
+    margin-top: 1px;
+}
+
+.bar-3 > p {
+    margin-left: 22px;
+}
+
+.bar-4 > p {
+    margin-left: 37px;
+}
+
+.right-header-column-info > h1 {
+    font-size: 38px;
+    margin-top: 42px;
+    margin-left: 28px;
+    letter-spacing: 0.6px;
+    display: block;
+    float: left;
+    margin-bottom: 0px;
+}
+
+.right-header-column-info {
+    height: 219px;
+    width: 460px;
+    float: left;
+    color: #33495F;
+}
+
+.right-header-column-info > p {
+    display: block;
+    float: left;
+    line-height: 1.8;
+    margin-top: 10px;
+    font-size: 17px;
+    margin-left: 30px;
+    letter-spacing: 0.5px;
+    word-spacing: 2.5px;
+    margin-bottom: 0px;
+}
+
+.right-header-column-info > p > a {
+    text-decoration: none;
+    color: #16C4EC;
+}
+
+.right-header-column-email {
+    height: 219px;
+    width: 360px;
+    float: left;
+}
+
+.right-header-column-email > h1 {
+    display: block;
+    font-size: 23px;
+    color: #33495F;
+    margin-top: 104.5px;
+    margin-left: 52px;
+}
+
+.right-header-column-email > h1:nth-child(2) {
+    color: #FA5351;
+    letter-spacing: 2.2px;
+    margin-top: 15px;
+    margin-left: 54px;
+}
+
+.right-header-column-email > hr {
+    margin-top: 32px;
+    margin-left: 52px;
+    color: #788695;
+    width: 270px;
+}
+
+.right-header-column-social {
+    float: left;
+    height: 75px;
+    width: 460px;
+}
+
+.right-header-column-social > a {
+    display: inline-block;
+    width: 33px;
+    height: 25px;
+    margin-top: 24px;
+    margin-right: 36.5px;
+    background: url("img/header-social.png") no-repeat;
+    vertical-align: middle;
+}
+
+.right-header-column-social > a:first-child {
+    margin-left: 21px;
+}
+
+.right-header-column-social > a:nth-child(2) {
+    background-position: -72px 0;
+}
+
+.right-header-column-social > a:nth-child(3) {
+    background-position: -146px 0;
+}
+
+.right-header-column-social > a:nth-child(4) {
+    background-position: -219px 0;
+}
+
+.right-header-column-social > a:nth-child(5) {
+    background-position: -293px 0;
+}
+
+.right-header-column-social > a:nth-child(6) {
+    background-position: -365px 0;
 }
