@@ -1,0 +1,20 @@
+@font-face {
+    font-family: "Lato";
+    src: url("fonts/Lato/Lato-Regular.ttf") format("truetype");
+    font-weight : normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Signika-Lite";
+    src: url("fonts/Signika/Signika-Light.ttf") format("truetype");
+    font-weight : normal;
+    font-style: normal;
+}   
+
+@font-face {
+    font-family: "Signika-Negetive";
+    src: url("fonts/Signika_Negative/SignikaNegative-Regular.ttf") format("truetype");
+    font-weight : normal;
+    font-style: normal;
+}

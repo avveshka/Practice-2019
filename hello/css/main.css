@@ -2,9 +2,99 @@ body {
     background-color: #EAEDF1
 }
 
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
 .header {
-    width : 90%;
-    margin: 83px auto 20px;
+    width : 1510px;
+    margin: 83px auto 36.5px;
     background-color: white;
     height: 295px;
+}
+
+.left-header-column,
+.right-header-column {
+    background-color: white;
+}
+
+.left-header-column {
+    float: left;
+    height: 295px;
+    width: 434px;
+    margin-left: 80px;
+}
+
+.right-header-column {
+    float: left;
+    margin-left: 90px;
+    height: 294px;
+    width: 820px;
+}
+
+.left-column{
+    float: left;
+    width: 633px;
+    height : 1097px;
+    background-color: white;
+    margin-left : 269px;
+}
+
+.center-column {
+    float: left;
+    width: 72px;
+    height : 1173px;
+    background-color: white;
+    margin-left : 5px;
+}
+
+.right-column{
+    width: 626px;
+    height : 1165px;
+    background-color: white;
+    float: right;
+    margin-right : 269px;
+}
+
+.footer {
+    clear: both;
+    background-color: white;
+    height: 128px;
+    width : 1510px;
+    margin: 0 auto;
+}
+
+.header > .left-header-column > img {
+    margin-top: 32px;
+    margin-left: 25px;
+}
+
+.left-header-column-info {
+    display: inline-block;
+    width: 255px;
+    height: 183px;
+}
+
+.header > .left-header-column > .left-header-column-info >  h1 {
+    font-family: "Signika-Lite";
+    font-size: 30px;
+    display: block;
+    float: right;
+    margin-top: 76px;
+    margin-right: 32px;
+    margin-bottom: 0px;
+    color: #33495F;
+}
+
+.header > .left-header-column > .left-header-column-info > p {
+    font-family: "Lato";
+    font-size: 17.3px;
+    display: block;
+    float: left;
+    margin: 0px;
+    margin-left: 37px;
+    margin-top: 3px;
+    color: #586879;
 }
