@@ -1,3 +1,10 @@
-h1 {
-    color: #00a023;
+body {
+    background-color: #EAEDF1
+}
+
+.header {
+    width : 90%;
+    margin: 83px auto 20px;
+    background-color: white;
+    height: 295px;
 }
