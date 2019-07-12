@@ -19,6 +19,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: "Lato-Italic";
+    src: url("fonts/Lato/Lato-LightItalic.ttf") format("truetype");
+    font-weight : normal;
+    font-style: italic;
+}
+
 h1 {
     font-family: "Signika-Lite";
 }
