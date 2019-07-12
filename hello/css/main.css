@@ -2,12 +2,8 @@ body {
     background-color: #EAEDF1
 }
 
-h1 {
-    font-family: "Signika-Lite";
-}
-
-p {
-    font-family: "Lato";
+h2 {
+    font-weight: normal;
 }
 
 .clearfix::after {
@@ -45,7 +41,6 @@ p {
     float: left;
     width: 633px;
     height : 1097px;
-    background-color: white;
     margin-left : 269px;
 }
 
@@ -277,4 +272,169 @@ p {
 
 .right-header-column-social > a:nth-child(6) {
     background-position: -365px 0;
+}
+
+.left-column-post {
+    width: 100%;
+    height: auto;
+    background-color: white;
+    margin-bottom: 33px;
+}
+
+.post-1 {
+    display: inline-block;
+    margin: 0;
+    margin-left: 25px;
+}
+
+.post-1:first-child {
+    margin-top: 27px;
+    font-size: 25px;
+    color: #33495F;
+}
+
+.post-1:nth-child(2) {
+    margin-left: 11px;
+    font-size: 18px;
+    color: #9EA7B4;
+}
+
+.post-1:nth-child(4) {
+    margin-left: 23px;
+    font-size: 21px;
+    margin-top: 1px;
+    color: #04BCA6;
+    margin-bottom: 31px;
+}
+
+.post-1-info,
+.post-1-info-img {
+    display: inline-block;
+    margin: 0;
+    margin-bottom: 14px;
+    vertical-align: top;
+}
+
+.post-1-info-img {
+    margin-left: 27px;
+}
+
+.post-1-info {
+    margin-left: 5px;
+    margin-top: 1px;
+    color: #33495F;
+}
+
+.post-1-aboutinfo,
+.post-1-aboutinfo-img,
+.post-1-aboutinfo-a {
+    display: inline-block;
+    margin: 0;
+    margin-top: 35px;
+    vertical-align: top;
+    color: #9EA7B4;
+    margin-bottom: 21px;
+}
+
+.post-1-aboutinfo-img {
+    margin-left: 27px;
+    margin-top: 38px;
+}
+
+.post-1-aboutinfo {
+    margin-right: 21px;
+    letter-spacing: -0.2px;
+}
+
+.post-1-aboutinfo-a{
+    font-family: "Signika-Lite";
+    margin-top: 27.9px;
+    margin-left: 55px;
+    text-decoration: none;
+    font-size: 17px;
+    color: white;
+    background-color: #16C4EC;
+    width: 217px;
+    height: 29px;
+    text-align: center;
+    padding-top: 9px;
+    border-radius: 4px;
+}
+
+.left-column-post:nth-child(2) > .post-1:nth-child(4) {
+    margin-bottom: 17px;
+}
+
+#margin-fix {
+    margin-top: 4px;
+}
+
+.left-column-post:nth-child(2) > .post-1-info,
+.left-column-post:nth-child(2) > .post-1-info-img {
+    margin-bottom: 12px;
+}
+
+.left-column-post:nth-child(2) > .post-1-aboutinfo {
+    margin-right: 15px;
+    margin-top: 37px;
+}
+
+.left-column-post:nth-child(2) > .post-1-aboutinfo-img {
+    margin-top: 40px;
+}
+
+#margin-fix-2 {
+    margin-right: 8px;
+}
+
+.left-column-post:nth-child(2) > .post-1-aboutinfo-a {
+    margin-top: 29.3px;
+    margin-left: 74px;
+}
+
+.left-column-post:nth-child(3) > .post-1:nth-child(4),
+.left-column-post:nth-child(4) > .post-1:nth-child(4) {
+    margin-bottom: 0px;
+}
+
+.left-column-post:nth-child(3) > .post-1:nth-child(2),
+.left-column-post:nth-child(4) > .post-1:nth-child(2) {
+    margin-left: 5px;
+}
+
+.left-column-post:nth-child(3) > .post-1:first-child,
+.left-column-post:nth-child(4) > .post-1:first-child {
+    margin-top: 29px;
+}
+
+.left-column-post:nth-child(3) > .post-1-aboutinfo{
+    margin-top: 34px;
+}
+
+.left-column-post:nth-child(3) > .post-1-aboutinfo-img {
+    margin-top: 37px;
+}
+
+.left-column-post:nth-child(3) > .post-1-aboutinfo-a {
+    margin-top: 24px;
+    margin-left: 48px;
+    background-color: #B0BBCA;
+}
+
+.left-column-post:nth-child(4) > .post-1-aboutinfo-img {
+    margin-top: 34px;
+}
+
+.left-column-post:nth-child(4) > .post-1-aboutinfo {
+    margin-top: 31px;
+}
+
+.left-column-post:nth-child(4) > .post-1-aboutinfo-a {
+    margin-top: 21px;
+    margin-left: 32px;
+    background-color: #B0BBCA;
+}
+
+#margin-fix-3 {
+    margin-left: 49px;
 }
