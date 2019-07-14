@@ -48,7 +48,6 @@ h2 {
     float: left;
     width: 72px;
     height : 1173px;
-    background-color: white;
     margin-left : 5px;
 }
 
@@ -719,4 +718,100 @@ progress::-webkit-progress-value {
 
 #last-progress {
     margin-bottom: 36px;
+}
+
+.timeline {
+    height: 100%;
+    text-align: center;
+}
+
+.timeline::before {
+    content: "";
+    width: 6px;
+    position: absolute;
+    left: 949px;
+    height: 1138px;
+    background-color: #DBE1E8;
+}
+
+.timeline > p {
+      font-size: 22px;
+      margin: 0px;
+      position: relative;
+      top: 1138px;
+      color: white;
+      display: block;
+      height: 31px;
+      padding-top: 4px;
+      background-color: #DBE1E8;
+}
+
+
+.timeline > div {
+    width: 20px;
+    height: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.circle-1::before,
+.circle-2::before,
+.circle-3::before,
+.circle-4::before,
+.circle-5::before,
+.circle-6::before,
+.circle-7::before,
+.circle-8::before,
+.circle-9::before {
+    content: "";
+    position: absolute;
+    left: 942px;
+    border-radius: 10px;
+    background-color: white;
+    width: 20px;
+    height: 20px;
+}
+
+.circle-2::before,
+.circle-3::before,
+.circle-5::before,
+.circle-7::before,
+.circle-9::before {
+    background-color: #DBE1E8;
+}
+
+.circle-1 {
+      margin-top: 125px;
+}
+
+.circle-2 {
+    margin-top: 80px;
+}
+
+.circle-3 {
+    margin-top: 184px;
+}
+
+.circle-4 {
+    margin-top: 39px;
+}
+
+.circle-5 {
+    margin-top: 120px;
+}
+
+.circle-6 {
+    margin-top: 118px;
+}
+
+.circle-7 {
+    margin-top: 62px;
+}
+
+.circle-8 {
+    margin-top: 97px;
+}
+
+.circle-9 {
+    margin-top: 23px;
 }
