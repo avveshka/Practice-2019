@@ -1,5 +1,6 @@
 body {
-    background-color: #EAEDF1
+    background-color: #EAEDF1;
+    width: 1888px;
 }
 
 h2 {
@@ -35,6 +36,7 @@ h2 {
     margin-left: 90px;
     height: 294px;
     width: 820px;
+    border-radius: 2px;
 }
 
 .left-column{
@@ -52,9 +54,9 @@ h2 {
 }
 
 .right-column{
+    float: right;
     width: 626px;
     height : 1165px;
-    float: right;
     margin-right : 269px;
 }
 
@@ -99,12 +101,12 @@ h2 {
 
 .bar {
     width: 108.4px;
-    height: 78px;
+    height: 80px;
     display: block;
     float: left;
     margin-right: 0px;
     margin-left: 0px;
-    margin-top: 29px;
+    margin-top: 27.5px;
 }
 
 .bar-1 {
@@ -277,6 +279,7 @@ h2 {
     height: auto;
     background-color: white;
     margin-bottom: 33px;
+    border-radius: 2px;
 }
 
 .post-1 {
@@ -444,6 +447,7 @@ h2 {
     margin-bottom: 33px;
     width: 100%;
     height: auto;
+    border-radius: 2px;
 }
 
 .right-column .post-1:first-child {
@@ -546,7 +550,6 @@ h2 {
     width: 20px;
     height: 17px;
     margin-left: -4px;
-    background: url("img/star-back.png") no-repeat;
 }
 
 .star-bar  img:first-child {
@@ -642,47 +645,60 @@ h2 {
 
 .progress span {
     display: inline-block;
-    width: 39px;
-    height: 23px;
+    width: 38px;
+    height: 18px;
     text-align: center;
     color: white;
     font-size: 10px;
     line-height: 18px;
     vertical-align: bottom;
     font-family: "Lato";
-    background: url("img/progress-bar-percent-back.png") no-repeat;
+    background-color: #34495E;
+    border-radius: 5px;
+    margin-bottom: 4px;
+    position: relative;
+}
+
+.progress span::after {
+    content: ''; 
+    position: absolute;
+    border: 3px solid transparent;
+    border-top: 3px solid #34495E;
+    top: 18px;
+    right: 16px;    
 }
 
 .span-1 {
-    margin-left: 110px;
+    margin-left: 112px;
 }
 
 .span-2 {
-    margin-left: -1px;
+    margin-left: 1px;
 }
 
+
 .span-3 {
-    margin-left: 50px;
+    margin-left: 52px;
 }
 
 .span-4 {
-    margin-left: 60px;
+    margin-left: 62px;
 }
 
 .span-5 {
-    margin-left: 148px;
+    margin-left: 150px;
 }
 
 .span-6 {
-    margin-left: 53px;
+    margin-left: 55px;
 }
 
 .span-7 {
-    margin-left: 121px;
+    margin-left: 123px;
 }
 
 .span-8 {
-    margin-left: 45px;
+    margin-left: 47px;
 }
 
 progress {
