@@ -32,6 +32,11 @@ function main() {
     requestAnimFrame(main);
 };
 
+resources.load([
+    'img/sprites.png',
+    'img/terrain.png'
+]);
+
 function init() {
     terrainPattern = ctx.createPattern(resources.get('img/terrain.png'), 'repeat');
 
@@ -46,45 +51,7 @@ function init() {
     main();
 }
 
-resources.load([
-    'img/sprites.png',
-    'img/terrain.png'
-]);
-
-function initMegaliths() {
-    var widthmegalith = 180;
-    var heightmegalith = 100;
-    var countmegaliths =  Math.round(Math.random()*5 + 4);
- // init random position
-    for( var i = 0; i < countmegaliths; i++ )
-    {
- 
-     var megalithPosx = Math.round(Math.random()*(canvas.width*0.68 + 1) + canvas.width*0.2 - 0.5);
-     var megalithPosy = Math.round(Math.random()*(canvas.height*0.67 + 1) + canvas.height*0.1 - 0.5);
-    
-         for( var j = 0; j < i; j++ )
-         {
-             if (boxCollides([megalithPosx,megalithPosy],[widthmegalith,heightmegalith],megaliths[j].pos,[widthmegalith,heightmegalith]))
-                 {
-                     var megalithPosx = Math.round(Math.random()*(canvas.width*0.68 + 1) + canvas.width*0.2 - 0.5);
-                     var megalithPosy = Math.round(Math.random()*(canvas.height*0.67 + 1) + canvas.height*0.1 - 0.5);
-                     j = -1;
-                 }
-          }
-          
-     if (Math.round(Math.random()) == 0 )
-         var type = 210;
-     else
-         var type = 270;
- 
-     megaliths[i] = { 
-                         pos: [megalithPosx,megalithPosy],
-                         sprite: new Sprite('img/sprites.png', [0,type], [60,60], 0, [0])
-                     }
-     }
- }
-
- function initManna() {
+function initManna() {
 
     var check = false;
 
@@ -113,6 +80,39 @@ function initMegaliths() {
         }
     }
 }
+
+function initMegaliths() {
+    var widthmegalith = 180;
+    var heightmegalith = 100;
+    var countmegaliths =  Math.round(Math.random()*3 + 2.5);
+ // init random position
+    for( var i = 0; i < countmegaliths; i++ )
+    {
+ 
+     var megalithPosx = Math.round(Math.random()*(canvas.width*0.68 + 1) + canvas.width*0.2 - 0.5);
+     var megalithPosy = Math.round(Math.random()*(canvas.height*0.67 + 1) + canvas.height*0.1 - 0.5);
+    
+         for( var j = 0; j < i; j++ )
+         {
+             if (boxCollides([megalithPosx,megalithPosy],[widthmegalith,heightmegalith],megaliths[j].pos,[widthmegalith,heightmegalith]))
+                 {
+                     var megalithPosx = Math.round(Math.random()*(canvas.width*0.68 + 1) + canvas.width*0.2 - 0.5);
+                     var megalithPosy = Math.round(Math.random()*(canvas.height*0.67 + 1) + canvas.height*0.1 - 0.5);
+                     j = -1;
+                 }
+          }
+          
+     if (Math.round(Math.random()) == 0 )
+         var type = 210;
+     else
+         var type = 270;
+ 
+     megaliths[i] = { 
+                         pos: [megalithPosx,megalithPosy],
+                         sprite: new Sprite('img/sprites.png', [0,type], [60,60], 0, [0])
+                     }
+     }
+ }
 
 resources.onReady(init);
 
@@ -277,6 +277,7 @@ function updateEntities(dt) {
             i--;
         }
     }
+
     for(var i=0; i<manna.length; i++) {
         manna[i].sprite.update(dt);
     
