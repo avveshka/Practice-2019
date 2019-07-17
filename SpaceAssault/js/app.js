@@ -54,7 +54,7 @@ resources.load([
 function initMegaliths() {
     var widthmegalith = 180;
     var heightmegalith = 100;
-    var countmegaliths =  Math.round(Math.random()*3 + 2.5);
+    var countmegaliths =  Math.round(Math.random()*5 + 4);
  // init random position
     for( var i = 0; i < countmegaliths; i++ )
     {
