@@ -35,6 +35,8 @@ function main() {
 function init() {
     terrainPattern = ctx.createPattern(resources.get('img/terrain.png'), 'repeat');
 
+    initMegaliths();
+
     document.getElementById('play-again').addEventListener('click', function() {
         reset();
     });
@@ -48,6 +50,40 @@ resources.load([
     'img/sprites.png',
     'img/terrain.png'
 ]);
+
+function initMegaliths() {
+    var widthmegalith = 180;
+    var heightmegalith = 100;
+    var countmegaliths =  Math.round(Math.random()*3 + 2.5);
+ // init random position
+    for( var i = 0; i < countmegaliths; i++ )
+    {
+ 
+     var megalithPosx = Math.round(Math.random()*(canvas.width*0.68 + 1) + canvas.width*0.2 - 0.5);
+     var megalithPosy = Math.round(Math.random()*(canvas.height*0.67 + 1) + canvas.height*0.1 - 0.5);
+    
+         for( var j = 0; j < i; j++ )
+         {
+             if (boxCollides([megalithPosx,megalithPosy],[widthmegalith,heightmegalith],megaliths[j].pos,[widthmegalith,heightmegalith]))
+                 {
+                     var megalithPosx = Math.round(Math.random()*(canvas.width*0.68 + 1) + canvas.width*0.2 - 0.5);
+                     var megalithPosy = Math.round(Math.random()*(canvas.height*0.67 + 1) + canvas.height*0.1 - 0.5);
+                     j = -1;
+                 }
+          }
+          
+     if (Math.round(Math.random()) == 0 )
+         var type = 210;
+     else
+         var type = 270;
+ 
+     megaliths[i] = { 
+                         pos: [megalithPosx,megalithPosy],
+                         sprite: new Sprite('img/sprites.png', [0,type], [60,60], 0, [0])
+                     }
+     }
+ }
+
 resources.onReady(init);
 
 // Game state
@@ -59,6 +95,7 @@ var player = {
 var bullets = [];
 var enemies = [];
 var explosions = [];
+var megaliths = [];
 
 var lastFire = Date.now();
 var gameTime = 0;
@@ -96,21 +133,47 @@ function update(dt) {
     scoreEl.innerHTML = score;
 };
 
+function checkPlayerCollisions(dx, dy = 0) {
+
+    
+    for(var i=0; i<megaliths.length; i++) {
+        var pos = megaliths[i].pos;
+        var size = megaliths[i].sprite.size;
+        
+        if(boxCollides(pos, size, [player.pos[0] + dx, player.pos[1] + dy], player.sprite.size)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 function handleInput(dt) {
     if(input.isDown('DOWN') || input.isDown('s')) {
-        player.pos[1] += playerSpeed * dt;
+        if(!(checkPlayerCollisions(0, playerSpeed * dt)))
+        {
+            player.pos[1] += playerSpeed * dt;
+        }
     }
 
     if(input.isDown('UP') || input.isDown('w')) {
-        player.pos[1] -= playerSpeed * dt;
+        if(!(checkPlayerCollisions(0, -playerSpeed * dt)))
+        {
+            player.pos[1] -= playerSpeed * dt;
+        }
     }
 
     if(input.isDown('LEFT') || input.isDown('a')) {
-        player.pos[0] -= playerSpeed * dt;
+        if(!(checkPlayerCollisions(dx = -playerSpeed * dt)))
+        {
+            player.pos[0] -= playerSpeed * dt;
+        }
     }
 
     if(input.isDown('RIGHT') || input.isDown('d')) {
-        player.pos[0] += playerSpeed * dt;
+        if(!(checkPlayerCollisions(dx = playerSpeed * dt)))
+        {
+            player.pos[0] += playerSpeed * dt;
+        }
     }
 
     if(input.isDown('SPACE') &&
@@ -197,7 +260,6 @@ function boxCollides(pos, size, pos2, size2) {
 function checkCollisions() {
     checkPlayerBounds();
     
-    // Run collision detection for all enemies and bullets
     for(var i=0; i<enemies.length; i++) {
         var pos = enemies[i].pos;
         var size = enemies[i].sprite.size;
@@ -207,14 +269,11 @@ function checkCollisions() {
             var size2 = bullets[j].sprite.size;
 
             if(boxCollides(pos, size, pos2, size2)) {
-                // Remove the enemy
                 enemies.splice(i, 1);
                 i--;
 
-                // Add score
                 score += 100;
 
-                // Add an explosion
                 explosions.push({
                     pos: pos,
                     sprite: new Sprite('img/sprites.png',
@@ -226,14 +285,42 @@ function checkCollisions() {
                                        true)
                 });
 
-                // Remove the bullet and stop this iteration
                 bullets.splice(j, 1);
                 break;
             }
         }
 
+
         if(boxCollides(pos, size, player.pos, player.sprite.size)) {
             gameOver();
+        }
+    }
+    
+    for(var i=0; i<megaliths.length; i++) {
+        var megalithPos = megaliths[i].pos;
+        var megalithSize = megaliths[i].sprite.size;
+
+        for(var j=0; j<enemies.length; j++) {
+            var enemiesPos = enemies[j].pos;
+            var enemiesSize = enemies[j].sprite.size;
+            if(boxCollides(megalithPos, megalithSize, enemiesPos, enemiesSize)) {
+                 enemies[j].pos[1]-=5;
+            }
+        }
+    }
+
+    for(var i=0; i<bullets.length; i++) {
+        var pos = bullets[i].pos;
+        var size = bullets[i].sprite.size;
+
+        for(var j=0; j<megaliths.length; j++) {
+            var pos2 = megaliths[j].pos;
+            var size2 = megaliths[j].sprite.size;
+
+            if(boxCollides(pos, size, pos2, size2)) {
+                bullets.splice(i, 1);
+                break;
+            }
         }
     }
 }
@@ -266,6 +353,7 @@ function render() {
     }
 
     renderEntities(bullets);
+    renderEntities(megaliths);
     renderEntities(enemies);
     renderEntities(explosions);
 };
