@@ -163,7 +163,7 @@ function update(dt) {
 
     initManna();
 
-    checkCollisions();
+    checkCollisions(dt);
 
     scoreEl.innerHTML = score;
     mannascoreEl.innerHTML = mannascore;
@@ -302,7 +302,7 @@ function boxCollides(pos, size, pos2, size2) {
                     pos2[0] + size2[0], pos2[1] + size2[1]);
 }
 
-function checkCollisions() {
+function checkCollisions(dt) {
     checkPlayerBounds();
     
     for(var i=0; i<enemies.length; i++) {
@@ -360,7 +360,8 @@ function checkCollisions() {
             var enemiesPos = enemies[j].pos;
             var enemiesSize = enemies[j].sprite.size;
             if(boxCollides(megalithPos, megalithSize, enemiesPos, enemiesSize)) {
-                 enemies[j].pos[1]-=5;
+                enemies[j].pos[1]-=enemySpeed * dt;
+                enemies[j].pos[0]+=enemySpeed * dt / 1.3;
             }
         }
     }
@@ -442,6 +443,7 @@ function reset() {
     isGameOver = false;
     gameTime = 0;
     score = 0;
+    mannascore = 0;
 
     enemies = [];
     bullets = [];
