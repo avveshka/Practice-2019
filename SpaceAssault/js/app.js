@@ -75,7 +75,7 @@ function initManna() {
             {
                 pos: [mannaPosx,mannaPosy],
                 sprite: new Sprite('img/sprites.png', [0, 153], [60, 60],
-                0, [0, 1, 2, 3], null, true)
+                5, [0, 1, 2, 3], null, false)
             });
         }
     }
@@ -349,7 +349,9 @@ function checkCollisions(dt) {
 
         if (boxCollides(pos, size, player.pos, player.sprite.size))
         {
+            manna[i].sprite.pos = [0, 153];
             manna[i].sprite.speed = 9;
+            manna[i].sprite.once = true;
         }
     }
     
