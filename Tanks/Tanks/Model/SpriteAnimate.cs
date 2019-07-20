@@ -31,7 +31,7 @@ namespace Model
 
         public override void Draw(Graphics g, int x, int y)
         {
-            g.DrawImage(sprite, new Rectangle(x, y, width, height), new Rectangle(this.x + (int)index * width, this.y, width, height), GraphicsUnit.Pixel);
+            g.DrawImage(Image, new Rectangle(x, y, width, height), new Rectangle(this.x + (int)index * width, this.y, width, height), GraphicsUnit.Pixel);
         }
 
     }

@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Direction.cs" />
+    <Compile Include="ListGameObject.cs" />
     <Compile Include="ObjectsView\AppleView.cs" />
     <Compile Include="ObjectsView\BulletView.cs" />
     <Compile Include="ObjectsView\KolobokView.cs" />

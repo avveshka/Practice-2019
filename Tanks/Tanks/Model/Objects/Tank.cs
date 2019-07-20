@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Model.Objects
 {
-    class Tank : MovableGameObject, IShooter
+    public class Tank : MovableGameObject, IShooter
     {
         public Tank(int x, int y, direction direction, int width, int height) : base(x, y, direction, width, height)
         {

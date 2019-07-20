@@ -8,9 +8,9 @@ namespace Model
 {
     public enum direction
     {
-        Left = 3,
+        Left = 2,
         Right = 0,
-        Up = 4,
-        Down = 2
+        Up = 3,
+        Down = 1
     }
 }

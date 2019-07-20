@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Model.Objects
 {
-    interface IShooter
+    public interface IShooter
     {
         float Reload { get; set; }
     }

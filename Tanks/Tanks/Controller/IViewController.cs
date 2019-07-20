@@ -8,6 +8,11 @@ namespace Controller
 {
     public interface IViewController
     {
-        void Render();
+        void Render(bool isGame = true);
+
+        bool ActiveTimer { get; set; }
+
+        int MapWidth { get; }
+        int MapHeight { get; }
     }
 }

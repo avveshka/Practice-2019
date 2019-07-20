@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace Model.ObjectsView
 {
-    class WallView : Wall
+    public class WallView : Wall
     {
         protected Sprite sprite;
 
         public WallView(int x, int y, int width, int height, bool destroyable = false) : base(x, y, width, height, destroyable)
         {
-            if (!destroyable)
+            if (destroyable)
             {
-                sprite = new Sprite(0, 190, width, height);
+                sprite = new Sprite(0, 192, width, height);
             }
             else
             {

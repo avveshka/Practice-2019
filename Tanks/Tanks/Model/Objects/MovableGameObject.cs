@@ -10,7 +10,7 @@ namespace Model.Objects
     {
         public direction ObjectDirection;
 
-        public float speed = 100;
+        public static float Speed = 100;
 
         public MovableGameObject(float x, float y, direction direction, int width, int height)
         {
@@ -46,9 +46,9 @@ namespace Model.Objects
             }
         }
 
-        public void Move(float dt)
+        virtual public void Move(float dt)
         {
-            float step = speed * dt;
+            float step = Speed * dt;
 
             if (ObjectDirection == direction.Up)
             {
@@ -66,6 +66,11 @@ namespace Model.Objects
             {
                 x -= step;
             }
+        }
+
+        public object Clone()
+        {
+            return new MovableGameObject(X, Y, ObjectDirection, Width, Height);
         }
     }
 }

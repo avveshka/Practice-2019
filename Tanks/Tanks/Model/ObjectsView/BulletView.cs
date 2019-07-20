@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Model.ObjectsView
 {
-    class BulletView : Bullet
+    public class BulletView : Bullet
     {
         protected Sprite sprite;
 

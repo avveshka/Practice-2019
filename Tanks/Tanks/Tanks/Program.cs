@@ -1,4 +1,6 @@
 ﻿using Controller;
+using Model;
+using Model.Objects;
 using Model.ObjectsView;
 using System;
 using System.Collections.Generic;
@@ -18,19 +20,39 @@ namespace Tanks
         [STAThread]
         static void Main(string[] args)
         {
-            //IGameObjects objects = new ListGameObjects();
-            //MainForm form = new MainForm(objects);
-            //IGameController gameController = new GameController(form, objects);
-            //form.SetController(gameController);
-            //gameController.NewGame();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
             MainForm form;
+
+            ListGameObject gameObjects = new ListGameObject();
+
             if (args.Length > 0)
             {
                 int width = int.Parse(args[0]);
                 int height = int.Parse(args[1]);
-                form = new MainForm(new Size(width, height));
+                if (args.Length > 2)
+                {
+                    MovableGameObject.Speed = int.Parse(args[2]);
+                }
+
+                form = new MainForm(new Size(width, height), gameObjects);
+
+                GameController gameController = new GameController(form, gameObjects);
+                if(args.Length > 4)
+                {
+                    gameController.SetCountObject(int.Parse(args[3]), int.Parse(args[4]));
+                }
+
+                form.SetController(gameController);
+
+                if(args.Length > 5)
+                {
+                    MovableGameObject.Speed = int.Parse(args[5]);
+                }
+
+                gameController.NewGame();
+
                 Application.Run(form);
             }
         }

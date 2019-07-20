@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.imgMap = new System.Windows.Forms.PictureBox();
+            this.timer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.imgMap)).BeginInit();
             this.SuspendLayout();
             // 
@@ -40,6 +42,11 @@
             this.imgMap.TabIndex = 0;
             this.imgMap.TabStop = false;
             // 
+            // timer
+            // 
+            this.timer.Interval = 10;
+            this.timer.Tick += new System.EventHandler(this.Timer_Tick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -48,6 +55,7 @@
             this.Controls.Add(this.imgMap);
             this.Name = "MainForm";
             this.Text = "Form1";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.imgMap)).EndInit();
             this.ResumeLayout(false);
 
@@ -56,5 +64,6 @@
         #endregion
 
         private System.Windows.Forms.PictureBox imgMap;
+        private System.Windows.Forms.Timer timer;
     }
 }

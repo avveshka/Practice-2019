@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Model.ObjectsView
 {
-    class AppleView : Apple
+    public class AppleView : Apple
     {
         protected Sprite sprite;
 

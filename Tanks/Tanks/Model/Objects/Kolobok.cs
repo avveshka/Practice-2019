@@ -13,5 +13,11 @@ namespace Model.Objects
         }
 
         public float Reload { get; set; }
+
+        public void OutScreen()
+        {
+            X = -Width;
+            Y = -Height;
+        }
     }
 }

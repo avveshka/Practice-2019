@@ -8,18 +8,37 @@ using System.Threading.Tasks;
 
 namespace Model.ObjectsView
 {
-    class TankView : Tank
+    public class TankView : Tank
     {
         protected Sprite sprite;
 
         public TankView(int x, int y, direction direction, int height, int width) : base(x, y, direction, height, width)
         {
-            sprite = new Sprite(32, 128, width, height);
+            if (ObjectDirection == direction.Left)
+            {
+                sprite = new Sprite(32, 160, width, height);
+            }
+            else if (ObjectDirection == direction.Right)
+            {
+                sprite = new Sprite(64, 128, width, height);
+            }
+            else if (ObjectDirection == direction.Down)
+            {
+                sprite = new Sprite(0, 160, width, height);
+            }
+            else
+            {
+                sprite = new Sprite(32, 128, width, height);
+            }
         }
 
         public void Draw(Graphics g)
         {
-            if (ObjectDirection == direction.Right)
+            if (ObjectDirection == direction.Left)
+            {
+                sprite.SetPosition(32, 160);
+            }
+            else if(ObjectDirection == direction.Right)
             {
                 sprite.SetPosition(64, 128);
             }
@@ -29,9 +48,11 @@ namespace Model.ObjectsView
             }
             else
             {
-                sprite.SetPosition(32, 160);
+                sprite.SetPosition(32, 128);
             }
             sprite.Draw(g, X, Y);
         }
+
+
     }
 }

@@ -10,7 +10,7 @@ namespace Model
 {
     public class Sprite
     {
-        protected static Image sprite;
+        public static Image Image;
         protected int x;
         protected int y;
         protected int width;
@@ -18,7 +18,7 @@ namespace Model
 
         public Sprite(int x, int y, int width, int height)
         {
-            if (sprite == null)
+            if (Image == null)
             {
                 LoadSprite();
             }
@@ -33,7 +33,7 @@ namespace Model
             string path = Path.Combine(Environment.CurrentDirectory, "sprites.png");
             if (File.Exists(path))
             {
-                sprite = Image.FromFile(path);
+                Image = Image.FromFile(path);
             }
             else
             {
@@ -43,7 +43,7 @@ namespace Model
 
         public virtual void Draw(Graphics g, int x, int y)
         {
-            g.DrawImage(sprite, new Rectangle(x, y, width, height), new Rectangle(this.x, this.y, width, height), GraphicsUnit.Pixel);
+            g.DrawImage(Image, new Rectangle(x, y, width, height), new Rectangle(this.x, this.y, width, height), GraphicsUnit.Pixel);
         }
 
         public void SetPosition(int x, int y)
