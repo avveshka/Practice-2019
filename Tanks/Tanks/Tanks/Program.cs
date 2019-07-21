@@ -27,34 +27,42 @@ namespace Tanks
 
             ListGameObject gameObjects = new ListGameObject();
 
+            int width;
+            int height;
+
             if (args.Length > 0)
             {
-                int width = int.Parse(args[0]);
-                int height = int.Parse(args[1]);
-                if (args.Length > 2)
-                {
-                    MovableGameObject.Speed = int.Parse(args[2]);
-                }
-
-                form = new MainForm(new Size(width, height), gameObjects);
-
-                GameController gameController = new GameController(form, gameObjects);
-                if(args.Length > 4)
-                {
-                    gameController.SetCountObject(int.Parse(args[3]), int.Parse(args[4]));
-                }
-
-                form.SetController(gameController);
-
-                if(args.Length > 5)
-                {
-                    MovableGameObject.Speed = int.Parse(args[5]);
-                }
-
-                gameController.NewGame();
-
-                Application.Run(form);
+                width = int.Parse(args[0]);
+                height = int.Parse(args[1]);
             }
+            else
+            {
+                width = 800;
+                height = 600;
+            }
+            if (args.Length > 2)
+            {
+                MovableGameObject.Speed = int.Parse(args[2]);
+            }
+
+            form = new MainForm(new Size(width, height), gameObjects);
+
+            GameController gameController = new GameController(form, gameObjects);
+            if (args.Length > 4)
+            {
+                gameController.SetCountObject(int.Parse(args[3]), int.Parse(args[4]));
+            }
+
+            form.SetController(gameController);
+
+            if (args.Length > 5)
+            {
+                MovableGameObject.Speed = int.Parse(args[5]);
+            }
+
+            gameController.NewGame();
+
+            Application.Run(form);
         }
     }
 }
