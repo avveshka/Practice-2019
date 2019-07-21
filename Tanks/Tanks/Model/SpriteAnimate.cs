@@ -13,6 +13,8 @@ namespace Model
         protected int countFrame;
         protected float index;
 
+        private bool end;
+
         public SpriteAnimate(int x, int y, int width, int height, float speed, int count) : base(x, y, width, height)
         {
             speedAnimate = speed;
@@ -26,6 +28,7 @@ namespace Model
             if (index > countFrame)
             {
                 index -= countFrame;
+                end = true;
             }
         }
 
@@ -34,5 +37,9 @@ namespace Model
             g.DrawImage(Image, new Rectangle(x, y, width, height), new Rectangle(this.x + (int)index * width, this.y, width, height), GraphicsUnit.Pixel);
         }
 
+        public bool OnFinish()
+        {
+            return end;
+        }
     }
 }

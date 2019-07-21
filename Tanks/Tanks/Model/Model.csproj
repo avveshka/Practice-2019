@@ -34,6 +34,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,13 +45,23 @@
   <ItemGroup>
     <Compile Include="Direction.cs" />
     <Compile Include="ListGameObject.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="LogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogForm.Designer.cs">
+      <DependentUpon>LogForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ObjectsView\AppleView.cs" />
+    <Compile Include="ObjectsView\BoomView.cs" />
     <Compile Include="ObjectsView\BulletView.cs" />
     <Compile Include="ObjectsView\KolobokView.cs" />
     <Compile Include="ObjectsView\TankView.cs" />
     <Compile Include="ObjectsView\WallView.cs" />
+    <Compile Include="ObjectsView\WaterView.cs" />
     <Compile Include="Objects\Apple.cs" />
     <Compile Include="Objects\BasicGameObject.cs" />
+    <Compile Include="Objects\Boom.cs" />
     <Compile Include="Objects\Bullet.cs" />
     <Compile Include="Objects\IShooter.cs" />
     <Compile Include="Objects\Kolobok.cs" />
@@ -58,10 +69,15 @@
     <Compile Include="Objects\StaticGameObject.cs" />
     <Compile Include="Objects\Tank.cs" />
     <Compile Include="Objects\Wall.cs" />
+    <Compile Include="Objects\Water.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpriteAnimate.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="LogForm.resx">
+      <DependentUpon>LogForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

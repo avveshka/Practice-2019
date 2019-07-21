@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.imgMap = new System.Windows.Forms.PictureBox();
             this.timer = new System.Windows.Forms.Timer(this.components);
+            this.btnStart = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.imgMap)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,11 +48,22 @@
             this.timer.Interval = 10;
             this.timer.Tick += new System.EventHandler(this.Timer_Tick);
             // 
+            // btnStart
+            // 
+            this.btnStart.Location = new System.Drawing.Point(354, 147);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(75, 23);
+            this.btnStart.TabIndex = 1;
+            this.btnStart.Text = "Start";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.BtnStart_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnStart);
             this.Controls.Add(this.imgMap);
             this.Name = "MainForm";
             this.Text = "Form1";
@@ -65,5 +77,6 @@
 
         private System.Windows.Forms.PictureBox imgMap;
         private System.Windows.Forms.Timer timer;
+        private System.Windows.Forms.Button btnStart;
     }
 }

@@ -17,11 +17,14 @@ namespace view
     {
         GameController gameController;
         ListGameObject objects;
+        private bool newGame = false;
 
         public bool ActiveTimer { get => timer.Enabled; set => timer.Enabled = value; }
 
         public int MapWidth => imgMap.Width;
         public int MapHeight => imgMap.Height;
+
+        public int FormWidth => Width;
 
         public MainForm(Size formSize, ListGameObject objects)
         {
@@ -51,6 +54,10 @@ namespace view
 
             objects.Apples.ForEach(apple => apple.Draw(graphics));
 
+            objects.Water.ForEach(water => water.Draw(graphics));
+
+            objects.Booms.ForEach(boom => boom.Draw(graphics));
+
             if (isGame)
             {
                 objects.Player.Draw(graphics);
@@ -60,7 +67,7 @@ namespace view
                 graphics.DrawString(objects.Score.ToString(), new Font(FontFamily.GenericSansSerif, 22, FontStyle.Bold),
                                 new SolidBrush(Color.White), new PointF(35, 10));
             }
-            else
+            else if(newGame)
             {
                 graphics.FillRectangle(new SolidBrush(Color.FromArgb(200, Color.Black)),
                    new Rectangle(0, 0, MapWidth, MapHeight));
@@ -89,6 +96,14 @@ namespace view
         private void Timer_Tick(object sender, EventArgs e)
         {
             this.gameController.Timer();
+        }
+
+        private void BtnStart_Click(object sender, EventArgs e)
+        {
+            gameController.IsGame = true;
+            newGame = true;
+            gameController.PlayerInitialization();
+            btnStart.Dispose();
         }
     }
 }

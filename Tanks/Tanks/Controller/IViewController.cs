@@ -14,5 +14,7 @@ namespace Controller
 
         int MapWidth { get; }
         int MapHeight { get; }
+
+        int FormWidth { get; }
     }
 }

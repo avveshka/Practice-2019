@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using System.ComponentModel;
 
 namespace Controller
 {
@@ -18,8 +19,11 @@ namespace Controller
         public int BlockSize;
         private IViewController view;
         private ListGameObject objects;
+        private BindingList<Log> logs;
+        private LogForm form;
+        private KolobokView reservePlayer;
 
-        private bool isGame = false;
+        public bool IsGame = false;
         private Stopwatch timer;
         private Random rnd;
 
@@ -44,10 +48,25 @@ namespace Controller
 
             ShootTanks();
 
-            func f = objects.Player.SetSprite;
-            f(dt);
+            if (!LogForm.IsClosed)
+            {
+                RefreshLog();
+                form.RefreshDgv(logs);
+            }
 
-            view.Render(isGame);
+            func f;
+            if (IsGame)
+            {
+                f = objects.Player.SetSprite;
+                objects.Booms.ForEach(i => f += i.SetSprite);
+                f(dt);
+            }
+            
+
+            objects.Booms.Where(boom => boom.OnFinish()).ToList()
+                 .ForEach(bang => objects.Booms.Remove(bang));
+
+            view.Render(IsGame);
         }
 
         public void SetCountObject(int tanks, int apples)
@@ -60,7 +79,7 @@ namespace Controller
         {
             this.view = view;
             this.objects = objects;
-            BlockSize = view.MapWidth / 25;
+            BlockSize = view.FormWidth / 25;
             rnd = new Random();
         }
 
@@ -75,6 +94,7 @@ namespace Controller
             objects.Tanks = new List<TankView>();
             objects.Bullets = new List<BulletView>();
             objects.Apples = new List<AppleView>();
+            objects.Booms = new List<BoomView>();
             objects.Score = 0;
             while (objects.Tanks.Count < tankCount)
             {
@@ -87,7 +107,6 @@ namespace Controller
             timer = new Stopwatch();
             timer.Start();
             view.ActiveTimer = true;
-            isGame = true;
             MainLoop();
         }
 
@@ -98,6 +117,7 @@ namespace Controller
             if (File.Exists(path))
             {
                 objects.Walls = new List<WallView>();
+                objects.Water = new List<WaterView>();
 
 
                 using (StreamReader sr = File.OpenText(path))
@@ -111,14 +131,17 @@ namespace Controller
                         {
                             switch (line[x])
                             {
-                                case 'p': // игрок
-                                    objects.Player = new KolobokView(BlockSize * x, BlockSize * y, direction.Up, 25, 25);
+                                case 'p':
+                                    reservePlayer = new KolobokView(BlockSize * x, BlockSize * y, direction.Up, 25, 25);
                                     break;
-                                case '*': // пробиваемая стена
+                                case '*':
                                     objects.Walls.Add(new WallView(BlockSize * x, BlockSize * y, BlockSize, BlockSize, true));
                                     break;
-                                case '=': // непробиваемая стена
+                                case '=':
                                     objects.Walls.Add(new WallView(BlockSize * x, BlockSize * y, BlockSize, BlockSize, false));
+                                    break;
+                                case '0':
+                                    objects.Water.Add(new WaterView(BlockSize * x, BlockSize * y, BlockSize, BlockSize));
                                     break;
                             }
                         }
@@ -135,7 +158,7 @@ namespace Controller
 
         public void KeyDown(Keys key)
         {
-            if (!isGame)
+            if (!IsGame)
             {
                 StartGame();
                 return;
@@ -165,18 +188,7 @@ namespace Controller
                     StartGame();
                     break;
                 case Keys.P:
-                    // Ставим на паузу
-                    //view.ActiveTimer = false;
-                    //timer.Stop();
-
-                    // Запускаем форму лога
-                    //LogForm form = new LogForm();
-                    //ShowInfo(form);
-                    //form.ShowDialog();
-                    // продолжаем игру
-
-                    //timer.Start();
-                    //view.ActiveTimer = true;
+                    InitializationLog();
                     break;
             }
         }
@@ -188,9 +200,12 @@ namespace Controller
 
         private void ResetReload(IShooter shooter, float dt)
         {
-            if (shooter.Reload > 0)
+            if (shooter != null)
             {
-                shooter.Reload -= dt;
+                if (shooter.Reload > 0)
+                {
+                    shooter.Reload -= dt;
+                }
             }
         }
 
@@ -201,26 +216,39 @@ namespace Controller
             var delApples = new List<AppleView>();
             var delBullets = new List<BulletView>();
 
-            MovableGameObject player = objects.Player.Clone() as MovableGameObject;
-            player.Move(dt);
-
-            if (ObjectInScreen(player) &&
-                objects.Walls.Find(wall => ObjectCollision(wall, player)) == null)
+            if (IsGame)
             {
-                bool isFree = true;
+                MovableGameObject player = objects.Player.Clone() as MovableGameObject;
+                player.Move(dt);
 
-                foreach (var tank in objects.Tanks)
+                if (ObjectInScreen(player) &&
+                    objects.Water.Find(water => ObjectCollision(water, player)) == null &&
+                    objects.Walls.Find(wall => ObjectCollision(wall, player)) == null)
                 {
-                    if (ObjectCollision(tank, player))
+                    bool isFree = true;
+
+                    foreach (var tank in objects.Tanks)
                     {
-                        isFree = false;
+                        if (ObjectCollision(tank, player))
+                        {
+                            isFree = false;
+                        }
+                    }
+
+                    if (isFree)
+                    {
+                        objects.Player.Move(dt);
                     }
                 }
 
-                if (isFree)
+                objects.Apples.ForEach(apple =>
                 {
-                    objects.Player.Move(dt);
-                }
+                    if (ObjectCollision(player, apple))
+                    {
+                        delApples.Add(apple);
+                        objects.Score++;
+                    }
+                });
             }
 
             objects.Tanks.ForEach(t =>
@@ -228,19 +256,11 @@ namespace Controller
                 t.Move(dt);
                 if (!ObjectInScreen(t) ||
                     objects.Walls.Find(wall => ObjectCollision(wall, t)) != null ||
+                    objects.Water.Find(water => ObjectCollision(water, t)) != null ||
                     objects.Tanks.Find(tnk => tnk != t ? ObjectCollision(tnk, t) : false) != null)
                 {
                     t.ChangeDirection();
                     t.Move(dt);
-                }
-            });
-
-            objects.Apples.ForEach(apple =>
-            {
-                if (ObjectCollision(player, apple))
-                {
-                    delApples.Add(apple);
-                    objects.Score++;
                 }
             });
 
@@ -262,6 +282,7 @@ namespace Controller
                             delWalls.Add(wall);
                         }
                         delBullet = true;
+                        CreateBang(bullet);
                     }
                 });
 
@@ -271,13 +292,18 @@ namespace Controller
                     {
                         delBullet = true;
                         delTanks.Add(tank);
+                        CreateBang(tank);
                     }
                 });
 
-                if (ObjectCollision(bullet, objects.Player) && bullet.Sender != objects.Player)
+                if (IsGame)
                 {
-                    delBullet = true;
-                    GameOver(); // Конец игры
+                    if (ObjectCollision(bullet, objects.Player) && bullet.Sender != objects.Player)
+                    {
+                        delBullet = true;
+                        CreateBang(objects.Player);
+                        GameOver(); // Конец игры
+                    }
                 }
 
                 if (delBullet)
@@ -319,11 +345,23 @@ namespace Controller
                 int y = rnd.Next(view.MapHeight - BlockSize);
                 var tank = new TankView(x, y, (direction)rnd.Next(4), 30, 30);
 
-                if (objects.Walls.Find(wall => ObjectCollision(wall, tank)) == null &&
+                if (objects.Player != null)
+                {
+                    if (objects.Walls.Find(wall => ObjectCollision(wall, tank)) == null &&
                     ObjectCollision(objects.Player, tank) == false &&
                     objects.Tanks.Find(tnk => tnk != tank ? ObjectCollision(tnk, tank) : false) == null)
+                    {
+                        objects.Tanks.Add(tank);
+                    }
+                }
+                else
                 {
-                    objects.Tanks.Add(tank);
+                    if (objects.Walls.Find(wall => ObjectCollision(wall, tank)) == null &&
+                    ObjectCollision(reservePlayer, tank) == false &&
+                    objects.Tanks.Find(tnk => tnk != tank ? ObjectCollision(tnk, tank) : false) == null)
+                    {
+                        objects.Tanks.Add(tank);
+                    }
                 }
 
             }
@@ -337,10 +375,21 @@ namespace Controller
                 int y = rnd.Next(view.MapHeight - BlockSize);
                 var apple = new AppleView(x, y, BlockSize, BlockSize);
 
-                if (objects.Walls.Find(wall => ObjectCollision(wall, apple)) == null &&
-                    ObjectCollision(objects.Player, apple) == false)
+                if (objects.Player != null)
                 {
-                    objects.Apples.Add(apple);
+                    if (objects.Walls.Find(wall => ObjectCollision(wall, apple)) == null &&
+                        ObjectCollision(objects.Player, apple) == false)
+                    {
+                        objects.Apples.Add(apple);
+                    }
+                }
+                else
+                {
+                    if (objects.Walls.Find(wall => ObjectCollision(wall, apple)) == null &&
+                       ObjectCollision(reservePlayer, apple) == false)
+                    {
+                        objects.Apples.Add(apple);
+                    }
                 }
 
             }
@@ -348,7 +397,7 @@ namespace Controller
 
         private void GameOver()
         {
-            isGame = false;
+            IsGame = false;
             objects.Player.OutScreen();
         }
 
@@ -379,45 +428,95 @@ namespace Controller
 
         private void ShootTanks()
         {
-            Rectangle p = new Rectangle(objects.Player.X, objects.Player.Y, objects.Player.Width, objects.Player.Height);
-
-            foreach (var tank in objects.Tanks)
+            if (IsGame)
             {
-                bool onTheWay = true;
-                direction lastDir = tank.ObjectDirection;
+                Rectangle p = new Rectangle(objects.Player.X, objects.Player.Y, objects.Player.Width, objects.Player.Height);
 
-                if (p.X + p.Width < tank.X && p.Y + p.Height > tank.Y + tank.Height / 2 && p.Y < tank.Y + tank.Height / 2)
+                foreach (var tank in objects.Tanks)
                 {
-                    tank.ObjectDirection = direction.Left;
-                }
-                else if (p.X > tank.X + tank.Width && p.Y + p.Height > tank.Y + tank.Height / 2 && p.Y < tank.Y + tank.Height / 2)
-                {
-                    tank.ObjectDirection = direction.Right;
-                }
-                else if (p.Y + p.Width < tank.Y && p.X + p.Width > tank.X + tank.Width / 2 && p.X < tank.X + tank.Width / 2)
-                {
-                    tank.ObjectDirection = direction.Up;
-                }
-                else if (p.Y > tank.Y + tank.Width && p.X + p.Width > tank.X + tank.Width / 2 && p.X < tank.X + tank.Width / 2)
-                {
-                    tank.ObjectDirection = direction.Down;
-                }
-                else
-                {
-                    onTheWay = false;
-                }
+                    bool onTheWay = true;
+                    direction lastDir = tank.ObjectDirection;
 
-                if (tank.ObjectDirection != lastDir && tank.Reload < 0.1f)
-                {
-                    tank.Reload = 0.5f;
-                }
+                    if (p.X + p.Width < tank.X && p.Y + p.Height > tank.Y + tank.Height / 2 && p.Y < tank.Y + tank.Height / 2)
+                    {
+                        tank.ObjectDirection = direction.Left;
+                    }
+                    else if (p.X > tank.X + tank.Width && p.Y + p.Height > tank.Y + tank.Height / 2 && p.Y < tank.Y + tank.Height / 2)
+                    {
+                        tank.ObjectDirection = direction.Right;
+                    }
+                    else if (p.Y + p.Width < tank.Y && p.X + p.Width > tank.X + tank.Width / 2 && p.X < tank.X + tank.Width / 2)
+                    {
+                        tank.ObjectDirection = direction.Up;
+                    }
+                    else if (p.Y > tank.Y + tank.Width && p.X + p.Width > tank.X + tank.Width / 2 && p.X < tank.X + tank.Width / 2)
+                    {
+                        tank.ObjectDirection = direction.Down;
+                    }
+                    else
+                    {
+                        onTheWay = false;
+                    }
 
-                if (onTheWay)
-                {
-                    CreateBullet(tank);
-                }
+                    if (tank.ObjectDirection != lastDir && tank.Reload < 0.1f)
+                    {
+                        tank.Reload = 0.5f;
+                    }
 
+                    if (onTheWay)
+                    {
+                        CreateBullet(tank);
+                    }
+
+                }
             }
+        }
+
+
+        private void InitializationLog()
+        {
+            RefreshLog();
+            form = new LogForm(logs);
+            form.Show();
+        }
+
+        private void RefreshLog()
+        {
+            logs = null;
+
+            logs = new BindingList<Log>();
+
+            logs.Add(new Log(objects.Player.X, objects.Player.X, "Kolobok"));
+
+            foreach (TankView tank in objects.Tanks)
+            {
+                logs.Add(new Log(tank.X, tank.X, "Tank"));
+            }
+
+            foreach (AppleView apple in objects.Apples)
+            {
+                logs.Add(new Log(apple.X, apple.X, "Apple"));
+            }
+
+            foreach (WallView wall in objects.Walls)
+            {
+                logs.Add(new Log(wall.X, wall.X, "Wall"));
+            }
+
+            foreach (BulletView bullet in objects.Bullets)
+            {
+                logs.Add(new Log(bullet.X, bullet.X, "Bullet"));
+            }
+        }
+
+        private void CreateBang(BasicGameObject obj)
+        {
+            objects.Booms.Add(new BoomView(obj.X + (obj.Width - 30) / 2, obj.Y + (obj.Height - 30) / 2, BlockSize, BlockSize));
+        }
+
+        public void PlayerInitialization()
+        {
+            objects.Player = reservePlayer;
         }
     }
 }

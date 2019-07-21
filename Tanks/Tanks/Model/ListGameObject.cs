@@ -14,6 +14,8 @@ namespace Model
         public List<WallView> Walls { get; set; }
         public List<BulletView> Bullets { get; set; }
         public List<AppleView> Apples { get; set; }
+        public List<WaterView> Water { get; set; }
+        public List<BoomView> Booms { get; set; }
         public int Score { get; set; }
     }
 }
