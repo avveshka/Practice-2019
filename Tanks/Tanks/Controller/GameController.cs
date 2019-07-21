@@ -160,7 +160,9 @@ namespace Controller
         {
             if (!IsGame)
             {
+                IsGame = true;
                 StartGame();
+                PlayerInitialization();
                 return;
             }
             switch (key)
